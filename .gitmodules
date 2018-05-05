@@ -1,0 +1,3 @@
+[submodule "frameworks/cocos2d-x/cocos/scripting/lua-bindings"]
+	path = frameworks/cocos2d-x/cocos/scripting/lua-bindings
+	url = /Users/jeep/cocos/mygame/frameworks/cocos2d-x/cocos/scripting/lua-bindings
