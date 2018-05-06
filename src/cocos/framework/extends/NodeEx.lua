@@ -127,6 +127,22 @@ end
 
 Node.scheduleUpdate = Node.onUpdate
 
+
+function Node:timer(delay,callback)
+    local delay = cc.DelayTime:create(delay)
+    local sequence = cc.Sequence:create(delay, cc.CallFunc:create(callback))
+    local action = cc.RepeatForever:create(sequence)
+    self:runAction(action)
+    return action
+end
+
+function Node:delay(delay, callback)
+    local delay = cc.DelayTime:create(delay)
+    local sequence = cc.Sequence:create(delay, cc.CallFunc:create(callback))
+    self:runAction(sequence)
+    return sequence
+end
+
 function Node:onNodeEvent(eventName, callback)
     if "enter" == eventName then
         self.onEnterCallback_ = callback

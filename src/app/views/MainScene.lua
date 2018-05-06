@@ -64,7 +64,7 @@ function MainScene:onCreate()
 
    local str = '123456789'
    local str64 = cc.Crypto:encodeBase64(str,string.len(str))
-   print('encodeBase64',str64)
+   printInfo('encodeBase64',str64)
 
 
 
@@ -93,14 +93,14 @@ function MainScene:onCreate()
    local path = cc.FileUtils:getInstance():getWritablePath()..'a.gif'
     ddll:createDownloadFileTask("https://s.ip-cdn.com/img/logo.gif",
     path,
-   function(a,b,c,d) print('ddll callback',a,b,c,d) end)
+   function(a,b,c,d) printLog('NET','ddll callback',a,b,c,d) end)
 
 
 
    local path = cc.FileUtils:getInstance():getWritablePath()..'ali_hb.jpg'
     ddll:createDownloadFileTask("https://s.ip-cdn.com/img/ali_hb.jpg",
     path,
-   function(a,b,c,d) print(a,b,c,d) end)
+   function(a,b,c,d) printLog('NET',a,b,c,d) end)
 
     
    
