@@ -3,7 +3,8 @@ local MainScene = class("MainScene", cc.load("mvc").ViewBase)
 
 function MainScene:onCreate()
 
-    printFilter(false,{"DUMP","ZIP","INFO"})
+    printLog('NET','xxnet=%d,%s,%d',1,'mmkk',100) 
+    -- printFilter(false,{"DUMP","ZIP","INFO"})
     printFilter(true,"ZIP")
     -- add background image
     if(true) then
@@ -45,7 +46,7 @@ function MainScene:onCreate()
    netxx:init()
    netxx:setEndpoint("www.baidu.com","",80)
    netxx:setLuaListener(function(a,b,c) 
-      print('xxnet',a,b,c) 
+      printLog('NET','xxnet',a,b,c) 
       if(a==0 and b==2) then
         netxx:setConnectWaitTimeout(1000*math.random(1,5))
         netxx:shutdown()
@@ -85,6 +86,9 @@ function MainScene:onCreate()
    dump(cc.Crypto,'cc.Crypto')
    dump(cc.DownloaderLua,'cc.DownloaderLua')
    -- cc.DownloaderLua:resetListener(1)
+
+   print("urlencode",string.urlencode('www.163.com'))
+   print("utf8trim",string.utf8trim('我1们2345',1.5,'?'))
 
    local ddll = cc.DownloaderLua
    ddll:createDownloadDataTask("https://t10.baidu.com/it/u=3903969777,3048841688&fm=173&app=12&f=JPEG?w=500&h=527&s=A69131C4C373B7DC887F5B9C0300508E",
