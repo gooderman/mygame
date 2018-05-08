@@ -42,18 +42,6 @@ function MainScene:onCreate()
    print(cjson.encode({a=1,b=2}))
    local lpack = require('pack')
    local sproto  = require('sproto.core')
-   local netxx = cc.NetXX:getInstance()
-   netxx:init()
-   netxx:setEndpoint("www.baidu.com","",80)
-   netxx:setLuaListener(function(a,b,c) 
-      printLog('NET','xxnet',a,b,c) 
-      if(a==0 and b==2) then
-        netxx:setConnectWaitTimeout(1000*math.random(1,5))
-        netxx:shutdown()
-      end  
-   end)
-   netxx:startConnect()
-
 
    local zlip = require('zlib')
    local sqlite = require('lsqlite3')
@@ -91,26 +79,39 @@ function MainScene:onCreate()
    print("utf8trim",string.utf8trim('我1们2345',1.5,'?'))
 
    local ddll = cc.DownloaderLua
-   ddll:createDownloadDataTask("https://t10.baidu.com/it/u=3903969777,3048841688&fm=173&app=12&f=JPEG?w=500&h=527&s=A69131C4C373B7DC887F5B9C0300508E",
-   function(a,b,c,d) print("ddll callback",a,b,c,d) end)
 
-   local path = cc.FileUtils:getInstance():getWritablePath()..'a.gif'
-    ddll:createDownloadFileTask("https://s.ip-cdn.com/img/logo.gif",
-    path,
-   function(a,b,c,d) printLog('NET','ddll callback',a,b,c,d) end)
+   -- local path = cc.FileUtils:getInstance():getWritablePath()..'a.gif'
+   --  ddll:createDownloadFileTask("https://s.ip-cdn.com/img/logo.gif",
+   --  path,
+   -- function(a,b,c,d) printLog('NET','ddll callback',a,b,c,d) end)
 
 
 
-   local path = cc.FileUtils:getInstance():getWritablePath()..'ali_hb.jpg'
-    ddll:createDownloadFileTask("https://s.ip-cdn.com/img/ali_hb.jpg",
-    path,
-   function(a,b,c,d) printLog('NET',a,b,c,d) end)
-
-    
-   
+   -- local path = cc.FileUtils:getInstance():getWritablePath()..'ali_hb.jpg'
+   --  ddll:createDownloadFileTask("https://s.ip-cdn.com/img/ali_hb.jpg",
+   --  path,
+   -- function(a,b,c,d) printLog('NET',a,b,c,d) end)
 
 
+    self:testNet(100,'www.baidu.com')
+    self:testNet(200,'www.bing.com')
+    self:testNet(300,'www.google.com')
 
+end
+
+function MainScene:testNet(tag,url)
+    local netxx = cc.NetXX:create()
+    netxx:retain()
+    netxx:init()
+    netxx:setEndpoint(url,"",80)
+    netxx:setLuaListener(function(a,b,c) 
+      printLog('NET'..tag,'xxnet',netxx,a,b,c) 
+      if(a==0 and b==2) then
+        netxx:setConnectWaitTimeout(1000*math.random(1,5))
+        netxx:shutdown()
+      end  
+    end)
+    netxx:startConnect()
 end
 
 return MainScene
