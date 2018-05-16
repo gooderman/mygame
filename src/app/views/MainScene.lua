@@ -96,22 +96,33 @@ function MainScene:onCreate()
     self:testNet(100,'www.baidu.com')
     self:testNet(200,'www.bing.com')
     self:testNet(300,'www.google.com')
+    self:testNet(400,'www.baidu.com')
+    self:testNet(500,'www.bing.com')
+    self:testNet(600,'www.google.com')    
 
 end
 
 function MainScene:testNet(tag,url)
     local netxx = cc.NetXX:create()
     netxx:retain()
+    netxx:setTag(tag)
     netxx:init()
     netxx:setEndpoint(url,"",80)
-    netxx:setLuaListener(function(a,b,c) 
-      printLog('NET'..tag,'xxnet',netxx,a,b,c) 
+    netxx:setLuaListener(function(a,b,c,d) 
+      -- printLog('NET-'..tag,a,b,c,d)
       if(a==0 and b==2) then
-        netxx:setConnectWaitTimeout(1000*math.random(1,5))
+        netxx:setConnectWaitTimeout(1000*math.random(5,10))
         netxx:shutdown()
+      elseif(a==0 and b==0) then
+        netxx:sendMsg("HTTP",1)
       end  
     end)
     netxx:startConnect()
+
+    -- self:delay(2.0,function ( ... )
+    --     netxx:release()
+    -- end)
+    -- netxx:release()
 end
 
 return MainScene

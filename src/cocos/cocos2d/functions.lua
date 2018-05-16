@@ -40,7 +40,8 @@ function printLog(tag, fmt, ...)
     local t = {
         '[',
         os.date("%H:%M:%S"),
-        '-',
+        ']',
+        '[',
         string.upper(tostring(tag)),
         "] "
     }
